@@ -12,7 +12,7 @@ resource "aws_s3_bucket" "example" {
 resource "aws_s3_object" "provision_source_files" {
   bucket =aws_s3_bucket.example.id
 
-  for_each = fileset("myapp/", "**/*.8*")
+  for_each = fileset("myapp/", "**/*.*")
 
   key = each.value
   source = "myapp/${each.value}"
