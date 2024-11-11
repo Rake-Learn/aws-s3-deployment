@@ -9,6 +9,17 @@ resource "aws_s3_bucket" "example" {
   bucket = "my-terraform-sample-bucket-rakesh"
 }
 
+resource "aws_s3_object" "provision_source_files" {
+  bucket =aws_s3_bucket.example.id
+
+  for_each = fileset("myapp/", "**/*.8*")
+
+  key = each.value
+  source = "myapp/${each.value}"
+  content_type = each.value
+  
+}
+
 resource "aws_s3_bucket_ownership_controls" "example" {
   bucket = aws_s3_bucket.example.id
   rule {
